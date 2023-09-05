@@ -23,34 +23,37 @@
 defined('ABSPATH') || exit;
 
 
+class CustomPlugin{
 
-// Add the custom CSS file and wordpress JQuery File in our Plugin
-wp_enqueue_script('jquery');
+function __construct(){
 
-$path_style = plugins_url('css/style.css', __FILE__);
-$ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
-wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
+          $this->require_files();
+           
+    // Add the custom CSS file and wordpress JQuery File in our Plugin
+         wp_enqueue_script('jquery');
+
+         $path_style = plugins_url('css/style.css', __FILE__);
+         $ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
+         wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
+
+
+    //  On Activation Create the Product Page (Code in Post-type.php)
+         add_action( 'init', 'custom_product_post_type' );
+         register_activation_hook(__FILE__, 'create_product_page');
 
 
 
-// Plugin activate create the Product Page if the page is already Exist not create the other one.
-function create_product_page()
-{
-    $page_title = 'Product';
-    $page_content = '[products_page]';
-    $page_check = get_page_by_title($page_title);
-
-    if (!$page_check) {
-        $page = array(
-            'post_type' => 'page',
-            'post_title' => $page_title,
-            'post_name' => 'product-item',
-            'post_content' => $page_content,
-            'post_status' => 'publish',
-            'post_author' => 1,
-        );
-
-        wp_insert_post($page);
-    }
 }
-register_activation_hook(__FILE__, 'create_product_page');
+
+
+private function require_files()
+    {
+      // Create the Custom Post Type (Product) 
+        require_once __DIR__ . '/includes/post-type.php';
+
+    }
+
+
+}
+
+$obj = new CustomPlugin();
