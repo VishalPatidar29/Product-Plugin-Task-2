@@ -57,6 +57,16 @@ function __construct(){
           add_action( 'admin_head-post.php', 'property_gallery_styles_scripts' );
           add_action( 'admin_head-post-new.php', 'property_gallery_styles_scripts' );
           add_action( 'save_post', 'property_gallery_save' );
+
+
+    // Add the Product Description Custom meta field (Code in meta-description.php)
+          add_action('add_meta_boxes', 'add_product_description_meta_box');
+          add_action('save_post', 'save_product_description_meta_data');
+
+
+
+    // override the single product page
+          add_filter('single_template', array($this,'custom_single_post_template'));
 }
 
 
@@ -74,7 +84,21 @@ private function require_files()
      // Create the Meta Gallery of Product 
           require_once __DIR__ . '/includes/meta-gallery.php';
 
+     // Create the meta Description for Product
+          require_once __DIR__ . '/includes/meta-description.php';
+
     }
+
+
+
+    function custom_single_post_template($template) {
+  if (is_single()) {
+      $template = plugin_dir_path(__FILE__) . 'templates/single-product.php';
+      
+  }
+  return $template;
+}
+
 
 
 }
