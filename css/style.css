@@ -1,0 +1,25 @@
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+
+  .product {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: calc(16.666% - 20px); /* 6 products per row */
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 1200px) {
+    .product {
+      width: calc(25% - 20px); /* 4 products per row on smaller screens */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .product {
+      width: calc(50% - 20px); /* 2 products per row on mobile screens */
+    }
+  }

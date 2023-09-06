@@ -47,17 +47,21 @@ function __construct(){
           add_action('save_post_product', 'custom_product_save_price');
 
 
-
+   //  Product Short Code for Showing Products 6 in a row
+          add_shortcode('products_page', 'my_posts');
 }
 
 
 private function require_files()
     {
       // Create the Custom Post Type (Product) 
-        require_once __DIR__ . '/includes/post-type.php';
+          require_once __DIR__ . '/includes/post-type.php';
 
       // Create the Custom Meta Field Price
-        require_once __DIR__ . '/includes/meta-price.php';
+          require_once __DIR__ . '/includes/meta-price.php';
+
+     // Show the all the Product  through shortcode
+          require_once __DIR__ . '/includes/product-shortcode.php';
 
     }
 
