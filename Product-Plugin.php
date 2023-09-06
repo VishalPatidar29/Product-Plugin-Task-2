@@ -35,6 +35,7 @@ function __construct(){
          $path_style = plugins_url('css/style.css', __FILE__);
          $ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
          wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
+         
 
 
     //  On Activation Create the Product Page and custom Post type product(Code in Post-type.php)
@@ -42,13 +43,20 @@ function __construct(){
          register_activation_hook(__FILE__, 'create_product_page');
 
 
-    //  Add the meta box for Price
+    //  Add the meta box for Price (Code in meta-price.php)
           add_action('add_meta_boxes', 'custom_product_price_meta_box');
           add_action('save_post_product', 'custom_product_save_price');
 
 
-   //  Product Short Code for Showing Products 6 in a row
+   //  Product Short Code for Showing Products 6 in a row(Code in product-shortcode.php)
           add_shortcode('products_page', 'my_posts');
+
+     
+    // Add the meta gallery for every Product (Code in meta-gallery.php)
+          add_action( 'admin_init', 'property_gallery_add_metabox' );
+          add_action( 'admin_head-post.php', 'property_gallery_styles_scripts' );
+          add_action( 'admin_head-post-new.php', 'property_gallery_styles_scripts' );
+          add_action( 'save_post', 'property_gallery_save' );
 }
 
 
@@ -62,6 +70,9 @@ private function require_files()
 
      // Show the all the Product  through shortcode
           require_once __DIR__ . '/includes/product-shortcode.php';
+
+     // Create the Meta Gallery of Product 
+          require_once __DIR__ . '/includes/meta-gallery.php';
 
     }
 
