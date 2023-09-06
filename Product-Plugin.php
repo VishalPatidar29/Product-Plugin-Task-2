@@ -37,9 +37,14 @@ function __construct(){
          wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
 
 
-    //  On Activation Create the Product Page (Code in Post-type.php)
+    //  On Activation Create the Product Page and custom Post type product(Code in Post-type.php)
          add_action( 'init', 'custom_product_post_type' );
          register_activation_hook(__FILE__, 'create_product_page');
+
+
+    //  Add the meta box for Price
+          add_action('add_meta_boxes', 'custom_product_price_meta_box');
+          add_action('save_post_product', 'custom_product_save_price');
 
 
 
@@ -50,6 +55,9 @@ private function require_files()
     {
       // Create the Custom Post Type (Product) 
         require_once __DIR__ . '/includes/post-type.php';
+
+      // Create the Custom Meta Field Price
+        require_once __DIR__ . '/includes/meta-price.php';
 
     }
 
