@@ -103,3 +103,11 @@
 		color: #0f88c1;
 		border: none;
 	}
+	
+	/* slider css */
+
+	.card {
+		background-color: #fff;
+		padding: 14px;
+		border: none
+		}

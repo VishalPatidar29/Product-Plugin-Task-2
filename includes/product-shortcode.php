@@ -28,7 +28,7 @@ echo  '<div class="product-container">';
        <?php echo the_post_thumbnail(); ?> 
          <h5><?php echo get_the_title(); ?></h5>
          <p>₹<?php echo $price; ?></p>
-        <a href="<?php the_permalink($id); ?>"><button type="button" class="btn">Read More</button></a>
+        <a href="<?php the_permalink($id); ?>"><button type="button" class="">Read More</button></a>
         
        
        </div>

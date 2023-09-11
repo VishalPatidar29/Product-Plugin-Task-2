@@ -37,6 +37,18 @@ function __construct(){
          wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
          
 
+         $path_style = plugins_url('css/bootstrap.css', __FILE__);
+         $ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/bootstrap.css');
+         wp_enqueue_style('my-custom-bootstrap', $path_style, '', $ver_style);
+
+         $path_style = plugins_url('css/slider.css', __FILE__);
+         $ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/slider.css');
+         wp_enqueue_style('my-custom-slider', $path_style, '', $ver_style);
+
+         $path_style = plugins_url('js/lightsider.js', __FILE__);
+         $ver_style = filemtime(plugin_dir_path(__FILE__) . 'js/lightsider.js');
+         wp_enqueue_script('my-custom-script', $path_style, '', $ver_style);
+
 
     //  On Activation Create the Product Page and custom Post type product(Code in Post-type.php)
          add_action( 'init', 'custom_product_post_type' );
