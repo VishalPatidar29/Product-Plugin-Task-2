@@ -31,7 +31,7 @@ function custom_product_post_type() {
 
     register_post_type( 'product', $args );
 
-
+// add the category option in custom post type
     register_taxonomy_for_object_type('category','product');
 
 }
