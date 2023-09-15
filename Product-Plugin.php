@@ -1,7 +1,7 @@
 <?php
 /*
 
-* Plugin Name: Product Plugin
+* Plugin Name: Product Plugin Copy
 
 * Description:The Product Plugin is for Demo Purpose.
 
@@ -28,9 +28,19 @@ class CustomPlugin{
 function __construct(){
 
           $this->require_files();
+          wp_enqueue_script('jquery');
            
     // Add the custom CSS file and wordpress JQuery File in our Plugin
-         wp_enqueue_script('jquery');
+    wp_enqueue_style('custom-sidebar-css', plugin_dir_url(__FILE__) . 'css/custom-sidebar.css');
+    wp_enqueue_style('custom-price-css', plugin_dir_url(__FILE__) . 'css/price-range.css');
+    wp_enqueue_script('custom-sidebar-js', plugin_dir_url(__FILE__) . 'js/custom-sidebar.js');
+
+    wp_localize_script('custom-sidebar-js', 'custom_sidebar_ajax', array('ajax_url' => admin_url('admin-ajax.php')));
+
+
+    wp_register_script( 'for_jquery', 'https://code.jquery.com/ui/1.13.2/jquery-ui.js', null, null, true );
+wp_enqueue_script('for_jquery');
+
 
          $path_style = plugins_url('css/style.css', __FILE__);
          $ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
@@ -79,6 +89,26 @@ function __construct(){
 
     // override the single product page
           add_filter('single_template', array($this,'custom_single_post_template'));
+
+
+
+
+
+          add_action('wp_ajax_custom_sidebar_search', 'custom_sidebar_search_handler');
+          add_action('wp_ajax_nopriv_custom_sidebar_search', 'custom_sidebar_search_handler');
+          
+          
+          
+          
+          // Register the AJAX action
+          add_action('wp_ajax_load_posts', 'load_posts');
+          add_action('wp_ajax_nopriv_load_posts', 'load_posts');
+
+
+
+    
+
+
 }
 
 
@@ -98,6 +128,8 @@ private function require_files()
 
      // Create the meta Description for Product
           require_once __DIR__ . '/includes/meta-description.php';
+
+          require_once __DIR__ . '/includes/pagination.php';
 
     }
 
